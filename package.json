@@ -1,0 +1,16 @@
+{
+  "name": "forms-dx",
+  "version": "0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^17.0.0"
+  }
+}
