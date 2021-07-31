@@ -37,9 +37,19 @@
 
     function renderHtml ($attributes) {
       ob_start(); ?>
-      <p>
-        <button><?= esc_html($attributes['cta']) ?></button>
-      </p>
+      <form>
+        <?php
+        foreach ($attributes['fields'] as $field) {
+          ?>
+          <div>
+            <label><?= $field['label'] ?></label>
+            <input type="text" placeholder="<?= $field['placeholder'] ?>">
+          </div>
+          <?php
+        }
+        ?>
+        <button type="submit"><?= esc_html($attributes['cta']['text']) ?></button>
+      </form>
       <?php return ob_get_clean();
     }
   }

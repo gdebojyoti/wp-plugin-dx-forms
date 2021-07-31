@@ -3,27 +3,18 @@ import { InspectorControls } from '@wordpress/block-editor'
 import { PanelBody, Button, TextControl } from '@wordpress/components'
 
 const Sidebar = ({setAttributes, attributes}) => {
-  const { cta, fields = [] } = attributes
+  const {
+    cta,
+    cta: {
+      text: ctaText
+    },
+    fields = []
+  } = attributes
 
-  // useEffect(() => {
-  //   setAttributes({
-  //     fields: [
-  //       {
-  //         label: "Name",
-  //         placeholder: "Name placeholder"
-  //       },
-  //       {
-  //         label: "Email",
-  //         placeholder: "Email placeholder"
-  //       }
-  //     ]
-  //   })
-  // }, [])
-
-  const onChange = (e, isEvent) => {
-    setAttributes({
-      cta: isEvent ? e.target.value : e
-    })
+  const onChangeCtaText = (text) => {
+    const newCta = { ...cta }
+    newCta.text = text
+    setAttributes({ cta: newCta })
   }
 
   // when any property (label, placeholder, etc) of an input field is changed
@@ -64,8 +55,8 @@ const Sidebar = ({setAttributes, attributes}) => {
         <PanelBody title="Action button settings">
           <TextControl
             label="Button text"
-            value={cta}
-            onChange={onChange}
+            value={ctaText}
+            onChange={onChangeCtaText}
           />
         </PanelBody>
 

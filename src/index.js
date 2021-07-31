@@ -11,14 +11,29 @@ wp.blocks.registerBlockType(
     icon: "smiley",
     category: "common",
     attributes: {
-      cta: {
-        type: "string"
+      fields: {
+        type: "array",
+        default: [
+          {
+            label: "Name",
+            placeholder: "Please enter your name"
+          },
+          {
+            label: "Email",
+            placeholder: "Please enter your email ID"
+          },
+        ]
       },
-      fields: []
+      cta: {
+        type: "object",
+        default: {
+          text: "Submit"
+        }
+      }
     },
     example: {
       attributes: {
-        fields: [],
+        fields: [{label: "Label"}],
         cta: 'Primary CTA'
       }
     },

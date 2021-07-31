@@ -5,8 +5,15 @@ import Sidebar from '../Sidebar'
 import config from '../../config/'
 const { basePrefix } = config
 
+console.clear()
+
 const Editor = ({ setAttributes, attributes }) => {
-  const { cta, fields = [] } = attributes
+  const {
+    cta: {
+      text: ctaText
+    },
+    fields = []
+  } = attributes
   
   const onChange = (e, isEvent) => {
     setAttributes({
@@ -23,11 +30,11 @@ const Editor = ({ setAttributes, attributes }) => {
           key={index}
         />
       ))}
-      <input
-        type="text"
-        onChange={e => onChange(e, true)}
-        value={cta}
-      />
+
+      {/* CTA */}
+      <button>
+        {ctaText}
+      </button>
 
       <Sidebar
         setAttributes={setAttributes}
