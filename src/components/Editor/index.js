@@ -7,10 +7,6 @@ const { basePrefix } = config
 
 const Editor = ({ setAttributes, attributes }) => {
   const { cta, fields = [] } = attributes
-
-  // wp.apiFetch({
-  //   url: `${basePrefix}/wp-json/wp/v2/categories`
-  // }).then(cat => console.log("cat", cat))
   
   const onChange = (e, isEvent) => {
     setAttributes({

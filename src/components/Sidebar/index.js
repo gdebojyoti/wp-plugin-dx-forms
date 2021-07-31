@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { ColorPalette, InspectorControls } from '@wordpress/block-editor'
-import { Panel, PanelBody, PanelRow, Button, TextControl } from '@wordpress/components'
+import { InspectorControls } from '@wordpress/block-editor'
+import { PanelBody, Button, TextControl } from '@wordpress/components'
 
 const Sidebar = ({setAttributes, attributes}) => {
   const { cta, fields = [] } = attributes
@@ -74,14 +74,6 @@ const Sidebar = ({setAttributes, attributes}) => {
             Add Field
           </Button>
         </PanelBody>
-        {/* <fieldset>
-          <legend className="blocks-base-control__label">
-            Background Color
-          </legend>
-          <ColorPalette // Element Tag for Gutenberg standard colour selector
-              onChange={ onChangeBGColor } // onChange event callback
-          />
-        </fieldset> */}
       </div>
     </InspectorControls>
   )

@@ -3,8 +3,6 @@ import { Panel, PanelBody, PanelRow, Button, TextControl } from '@wordpress/comp
 
 import Editor from './components/Editor'
 
-// alert("I got in")
-
 wp.blocks.registerBlockType(
   "dx-forms/field",
   {
@@ -25,11 +23,6 @@ wp.blocks.registerBlockType(
       }
     },
     edit: Editor,
-    // save: ({ attributes }) => (
-    //   <p>
-    //     <button>{attributes.cta}</button>
-    //   </p>
-    // )
     save: () => null
   }
 )
