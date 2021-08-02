@@ -5,13 +5,22 @@
   class DxFormsOutput {
     function render ($attributes) {
       ob_start(); ?>
+
+      <h3><?= $attributes['info']['heading'] ?></h3>
+      <div><?= $attributes['info']['subheading'] ?></div>
       
       <form>
-        <!-- TODO: use correct form ID -->
-        <input type="hidden" data-is-field name="form_id" value="USE-CORRECT-ID">
+        <!-- hidden field to pass form ID -->
+        <input
+          type="hidden"
+          data-is-field
+          name="form_id"
+          value="<?= $attributes['info']['id'] ?>"
+        >
+        
+        <!-- form fields -->
         <?php
         foreach ($attributes['fields'] as $index => $field) {
-          // print_r ($field);
           ?>
           <div>
             <label for="dx_forms_first_<?= $index ?>"><?= $field['label'] ?></label>
@@ -29,6 +38,8 @@
           <?php
         }
         ?>
+
+        <!-- form submit CTA -->
         <button type="submit"><?= esc_html($attributes['cta']['text']) ?></button>
       </form>
 

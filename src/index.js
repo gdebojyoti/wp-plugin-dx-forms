@@ -11,6 +11,15 @@ wp.blocks.registerBlockType(
     icon: "block-default",
     category: "common",
     attributes: {
+      info: {
+        type: "object",
+        default: {
+          id: "",
+          name: "",
+          heading: "",
+          subheading: ""
+        }
+      },
       fields: {
         type: "array",
         default: [
@@ -34,7 +43,7 @@ wp.blocks.registerBlockType(
     example: {
       attributes: {
         fields: [{label: "Label"}],
-        cta: 'Primary CTA'
+        cta: {text: "Primary CTA"}
       }
     },
     edit: Editor,
