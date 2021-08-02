@@ -1,6 +1,6 @@
 ## Primary features
 
-- [x] Plugin setup for creating new forms
+- [x] ~~Plugin setup for creating new forms~~
 - [ ] Add / edit fields
 - [ ] Create single table for plugin. Save form submissions
 - [ ] Send emails
