@@ -14,7 +14,7 @@
       $sql = "CREATE TABLE $table_name (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         timestamp timestamp NOT NULL default CURRENT_TIMESTAMP,
-        form_id varchar(10) DEFAULT '' NOT NULL,
+        form_id varchar(20) DEFAULT '' NOT NULL,
         data varchar(10000) DEFAULT '' NOT NULL,
         UNIQUE KEY id (id)
       ) $charset_collate;";
