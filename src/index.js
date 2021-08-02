@@ -4,11 +4,11 @@ import { Panel, PanelBody, PanelRow, Button, TextControl } from '@wordpress/comp
 import Editor from './components/Editor'
 
 wp.blocks.registerBlockType(
-  "dx-forms/field",
+  "dx-forms/form",
   {
-    title: "Dx Forms Field",
-    description: 'My first form block plugin',
-    icon: "smiley",
+    title: "Dx Forms",
+    description: 'The ultimate form plugin for WP Gutenberg',
+    icon: "block-default",
     category: "common",
     attributes: {
       fields: {

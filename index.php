@@ -1,8 +1,8 @@
 <?php
 
   /*
-    Plugin Name: Ultimate Forms Dx
-    Description: His first plugin
+    Plugin Name: Dx Forms
+    Description: The ultimate form plugin for WP Gutenberg
     Version: 0.1
     Author: Debojyoti "D3XT3R" Ghosh
     Author URI: https://www.debojyotighosh.com/
@@ -16,11 +16,16 @@
   class DxForms {
     function __construct () {
       add_action( 'init', array($this, "adminAssets") );
+
+      // create table for form
+      require_once('php/DxFormsDatabase.php');
+      $dxFormsDatabase = new DxFormsDatabase();
+      $dxFormsDatabase->createTable();
     }
 
     function adminAssets () {
       wp_register_script(
-        'dx-forms-field',
+        'dx-forms',
         plugins_url( 'build/index.js', __FILE__ ),
         array(
           'wp-blocks',
@@ -29,28 +34,13 @@
         )
       );
 
-      register_block_type( 'dx-forms/field', array(
-        'editor_script' => 'dx-forms-field',
-        'render_callback' => array($this, 'renderHtml')
-      ) );
-    }
+      require_once('php/DxFormsOutput.php');
+      $output = new DxFormsOutput();
 
-    function renderHtml ($attributes) {
-      ob_start(); ?>
-      <form>
-        <?php
-        foreach ($attributes['fields'] as $field) {
-          ?>
-          <div>
-            <label><?= $field['label'] ?></label>
-            <input type="text" placeholder="<?= $field['placeholder'] ?>">
-          </div>
-          <?php
-        }
-        ?>
-        <button type="submit"><?= esc_html($attributes['cta']['text']) ?></button>
-      </form>
-      <?php return ob_get_clean();
+      register_block_type( 'dx-forms/form', array(
+        'editor_script' => 'dx-forms',
+        'render_callback' => array($output, 'render')
+      ) );
     }
   }
 
