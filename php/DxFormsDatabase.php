@@ -22,6 +22,28 @@
       require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
       dbDelta( $sql );
     }
+
+    // save data to DB when user submits form
+    // return true if successful
+    function saveFormData ($formData) {
+      // exit if form is not valid (i.e., was not created by "Dx Forms")
+      $formId = $formData['form_id'];
+      if (!$formId) {
+        return;
+      }
+      
+      // remove form_id from form data
+      unset($formData['form_id']);
+
+      global $wpdb;
+      $table_name = $wpdb->prefix . "dx_forms_data";
+      $wpdb->insert($table_name, array(
+        "form_id" => $formId,
+        "data" => json_encode($formData)
+      ));
+
+      return true;
+    }
   }
 
 ?>

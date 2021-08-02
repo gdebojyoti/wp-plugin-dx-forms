@@ -13,6 +13,10 @@
     exit;
   }
 
+  if (!defined('DX_FORMS_PLUGIN_PATH')) {
+    define('DX_FORMS_PLUGIN_PATH', plugins_url('', __FILE__));
+  }
+
   class DxForms {
     function __construct () {
       add_action( 'init', array($this, "adminAssets") );
