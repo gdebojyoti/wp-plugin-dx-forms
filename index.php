@@ -25,7 +25,11 @@
       require_once('php/DxFormsDatabase.php');
       $dxFormsDatabase = new DxFormsDatabase();
       $dxFormsDatabase->createTable();
+      
+      // event listener for when post is updated
+      add_action( 'post_updated', array($dxFormsDatabase, "saveFormMetaData"), 10, 3 );
 
+      // create setting page in admin panel
       require_once('php/DxFormsAdmin.php');
       new DxFormsAdmin();
     }
