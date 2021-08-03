@@ -25,6 +25,9 @@
       require_once('php/DxFormsDatabase.php');
       $dxFormsDatabase = new DxFormsDatabase();
       $dxFormsDatabase->createTable();
+
+      require_once('php/DxFormsAdmin.php');
+      new DxFormsAdmin();
     }
 
     function adminAssets () {
