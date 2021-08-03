@@ -6,7 +6,10 @@ import Sidebar from '../Sidebar'
 import config from '../../config/'
 const { basePrefix } = config
 
-console.clear()
+// TODO: remove this; for dev only
+if (window.location.host === "localhost:8888") {
+  console.clear()
+}
 
 const Editor = ({ setAttributes, attributes }) => {
   const {
