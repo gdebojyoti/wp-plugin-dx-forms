@@ -77,8 +77,6 @@
 
     // fetch data / submissions for a particular form
     function fetchFormSubmissions ($formId, $field_mappings) {
-      var_dump($field_mappings);
-
       global $wpdb;
       $table_name = $wpdb->prefix . "dx_forms_data";
       $dbResults = $wpdb->get_results( "SELECT * FROM $table_name WHERE form_id = '$formId'" );
