@@ -28,7 +28,11 @@
     }
 
     function renderPage () {
+      $this->fetchAllForms();
+      
       ?>
+      <hr><hr>
+      
       <h1 class="wp-heading-inline">Hello there!</h1>
       <form method="post" action="options.php">
         <?php settings_fields( 'extra-post-info-settings' ); ?>
@@ -42,25 +46,42 @@
           </tr>
         </table>
         <?php submit_button(); ?>
-
-        <hr><hr>
-
-        <h3>Form details</h3>
-        <!-- TODO: fetch form IDs dynamically from a separate table (form meta data) -->
-        <?php $this->fetchData("111") ?>
-        <!-- <?php $this->fetchData("form-1627941872878") ?> -->
       </form>
       <?php
+
+      $this->renderFooter();
     }
 
-    function fetchData ($formId) {
+    // fetch list of all forms
+    function fetchAllForms () {
+      global $wpdb;
+      $table_name = $wpdb->prefix . "dx_forms_meta_data";
+      $dbResults = $wpdb->get_results( "SELECT * FROM $table_name" );
+
+      echo "<h1>All forms</h1>";
+
+      // loop through all forms
+      foreach ($dbResults as $row) {
+        ?>
+          <div>Created on: <?= date("F j, Y. g:i A",strtotime($row->timestamp)) ?></div>
+          <div><?= $row->form_name ?></div>
+          <!-- <br><br> -->
+          <h3>Form details</h3>
+        <?php
+        $this->fetchFormData($row->form_id);
+      }
+
+      echo "<hr>";
+    }
+
+    // fetch data for a particular form
+    function fetchFormData ($formId) {
       global $wpdb;
       $table_name = $wpdb->prefix . "dx_forms_data";
-      $charset_collate = $wpdb->get_charset_collate(); // TODO: find out wtf this is
-      $myLink = $wpdb->get_results( "SELECT * FROM $table_name WHERE form_id = '$formId'" );
+      $dbResults = $wpdb->get_results( "SELECT * FROM $table_name WHERE form_id = '$formId'" );
       
       // loop through all form submissions (i.e., messages)
-      foreach ($myLink as $row) {
+      foreach ($dbResults as $row) {
         // pretty print date
         echo date("F j, Y. g:i A",strtotime($row->timestamp));
         echo "<br>";
@@ -74,6 +95,16 @@
 
         echo "<hr>";
       }
+    }
+
+    function renderFooter () {
+      ?>
+        <footer>
+          <div>
+            Created by <a href="https://www.debojyotighosh.com" target="_blank">Debojyoti Ghosh</a>.
+          </div>
+        </footer>
+      <?php
     }
   }
 
