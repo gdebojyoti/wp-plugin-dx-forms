@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Button, TextControl } from '@wordpress/components'
+import { Button, TextControl, TextareaControl, SelectControl } from '@wordpress/components'
 
 import Sidebar from '../Sidebar'
 
@@ -48,13 +48,38 @@ const Editor = ({ setAttributes, attributes }) => {
       <h3>{heading}</h3>
       <div>{subheading}</div>
       <form>
-        {fields.map(({ label, placeholder, type }, index) => (
-          <TextControl
-            label={label}
-            placeholder={placeholder}
-            key={index}
-          />
-        ))}
+        {fields.map(({ label, placeholder, type, options }, index) => {
+          switch (type) {
+            case 'options':
+              const generatedOptions = options.map(data => ({
+                value: data,
+                label: data
+              }))
+              return (
+                <SelectControl
+                  label={label}
+                  options={generatedOptions}
+                  key={index}
+                />
+              )
+            case 'textarea':
+              return (
+                <TextareaControl
+                  label={label}
+                  placeholder={placeholder}
+                  key={index}
+                />
+              )
+            default:
+              return (
+                <TextControl
+                  label={label}
+                  placeholder={placeholder}
+                  key={index}
+                />
+              )
+          }
+        })}
 
         {/* CTA */}
         <button>

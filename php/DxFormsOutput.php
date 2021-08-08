@@ -20,23 +20,21 @@
         
         <!-- form fields -->
         <?php
-        foreach ($attributes['fields'] as $index => $field) {
-          ?>
-          <div>
-            <label for="dx_forms_first_<?= $index ?>"><?= $field['label'] ?></label>
+          require_once('DxFormsComponents.php'); // TODO: avoid relative paths
+          $dxFormsComponents = new DxFormsComponents();
+          
+          foreach ($attributes['fields'] as $index => $field) {
+            ?>
             <div>
-              <!-- TODO: use correct `name` in input fields -->
-              <input
-                data-is-field
-                type="text"
-                name="name_<?= $index ?>"
-                id="dx_forms_first_<?= $index ?>"
-                placeholder="<?= $field['placeholder'] ?>"
-              >
+              <label for="dx_forms_first_<?= $index ?>"><?= $field['label'] ?></label>
+              <div>
+                <?php
+                  echo $dxFormsComponents->renderComponent($index, $field);
+                ?>
+              </div>
             </div>
-          </div>
-          <?php
-        }
+            <?php
+          }
         ?>
 
         <!-- form submit CTA -->
