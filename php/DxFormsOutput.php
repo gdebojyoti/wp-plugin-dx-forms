@@ -20,18 +20,21 @@
         
         <!-- form fields -->
         <?php
-        foreach ($attributes['fields'] as $index => $field) {
-          ?>
-          <div>
-            <label for="dx_forms_first_<?= $index ?>"><?= $field['label'] ?></label>
+          require_once('DxFormsComponents.php'); // TODO: avoid relative paths
+          $dxFormsComponents = new DxFormsComponents();
+          
+          foreach ($attributes['fields'] as $index => $field) {
+            ?>
             <div>
-              <?php
-                echo $this->renderComponent($index, $field);
-              ?>
+              <label for="dx_forms_first_<?= $index ?>"><?= $field['label'] ?></label>
+              <div>
+                <?php
+                  echo $dxFormsComponents->renderComponent($index, $field);
+                ?>
+              </div>
             </div>
-          </div>
-          <?php
-        }
+            <?php
+          }
         ?>
 
         <!-- form submit CTA -->
@@ -75,63 +78,6 @@
       </script>
 
       <?php return ob_get_clean();
-    }
-
-    function renderComponent ($index, $field) {
-      $type = isset($field['type']) ? $field['type'] : '';
-      $html;
-
-      // TODO: use correct `name` in input fields
-      $id = "dx_forms_first_$index";
-      $name = "name_$index";
-      
-      switch ($type) {
-        case 'options': {
-          $options = $field['options'];
-          ob_start(); ?>
-            <select
-              data-is-field
-              name=<?= $name ?>
-              id=<?= $id ?>
-              placeholder="<?= $field['placeholder'] ?>"
-            >
-              <option value=""><?= $field['placeholder'] ?></option>
-              <?php
-                foreach ($options as $index => $option) {?>
-                  <option value="<?= $option ?>">
-                    <?= $option ?>
-                  </option>
-                <?php }
-              ?>
-            </select>
-          <?php $html = ob_get_clean();
-          break;
-        }
-        case 'textarea': {
-          ob_start(); ?>
-            <textarea
-              data-is-field
-              name=<?= $name ?>
-              id=<?= $id ?>
-              placeholder="<?= $field['placeholder'] ?>"
-            ></textarea>
-          <?php $html = ob_get_clean();
-          break;
-        }
-        default: {
-          ob_start(); ?>
-            <input
-              data-is-field
-              type="text"
-              name=<?= $name ?>
-              id=<?= $id ?>
-              placeholder="<?= $field['placeholder'] ?>"
-            >
-          <?php $html = ob_get_clean();
-        }
-      }
-      
-      return $html;
     }
   }
 
