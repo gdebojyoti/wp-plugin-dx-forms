@@ -59,6 +59,12 @@
 
             $formId = $info['id'];
             $formName = $info['name'];
+
+            $fields = $attributes['fields'];
+            $fieldData = array();
+            foreach ($fields as $field) {
+              $fieldData[$field['id']] = $field['label'];
+            }
           }
         }
       }
@@ -71,7 +77,8 @@
         $wpdb->replace($table_name, array(
           "form_id" => $formId,
           "form_name" => $formName,
-          "post_id" => $postId
+          "post_id" => $postId,
+          "field_mappings" => json_encode($fieldData)
         ));
       }
     }
