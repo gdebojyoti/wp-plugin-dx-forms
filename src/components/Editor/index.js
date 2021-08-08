@@ -48,7 +48,7 @@ const Editor = ({ setAttributes, attributes }) => {
       <h3>{heading}</h3>
       <div>{subheading}</div>
       <form>
-        {fields.map(({ label, placeholder, type, options }, index) => {
+        {fields.map(({ label, placeholder, type, options = [] }, index) => {
           switch (type) {
             case 'options':
               const generatedOptions = options.map(data => ({
