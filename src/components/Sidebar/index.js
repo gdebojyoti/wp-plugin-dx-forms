@@ -34,7 +34,8 @@ const Sidebar = ({setAttributes, attributes}) => {
   const addField = () => {
     setAttributes({
       fields: [...fields, {
-        label: "New field" // TODO: constants; language
+        label: "New field", // TODO: constants; language
+        id: `field-${new Date().getTime()}` // TODO: find better unique ID for field
       }]
     })
   }
