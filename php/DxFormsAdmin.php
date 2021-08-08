@@ -29,10 +29,9 @@
 
     function renderPage () {
       $this->fetchAllForms();
-      
       ?>
-      <hr><hr>
       
+      <!-- TODO: remove; dummy stuff -->
       <h1 class="wp-heading-inline">Hello there!</h1>
       <form method="post" action="options.php">
         <?php settings_fields( 'extra-post-info-settings' ); ?>
@@ -47,8 +46,8 @@
         </table>
         <?php submit_button(); ?>
       </form>
+      
       <?php
-
       $this->renderFooter();
     }
 
@@ -63,19 +62,23 @@
       // loop through all forms
       foreach ($dbResults as $row) {
         ?>
-          <div>Created on: <?= date("F j, Y. g:i A",strtotime($row->timestamp)) ?></div>
+          <div>Last updated on: <?= date("F j, Y. g:i A",strtotime($row->timestamp)) ?></div>
           <div><?= $row->form_name ?></div>
-          <!-- <br><br> -->
-          <h3>Form details</h3>
+          <h3>Form submissions</h3>
         <?php
-        $this->fetchFormData($row->form_id);
+        // get field mappings (ID to name) from DB row
+        $field_mappings = json_decode($row->field_mappings, true);
+        
+        $this->fetchFormSubmissions($row->form_id, $field_mappings);
       }
 
       echo "<hr>";
     }
 
-    // fetch data for a particular form
-    function fetchFormData ($formId) {
+    // fetch data / submissions for a particular form
+    function fetchFormSubmissions ($formId, $field_mappings) {
+      var_dump($field_mappings);
+
       global $wpdb;
       $table_name = $wpdb->prefix . "dx_forms_data";
       $dbResults = $wpdb->get_results( "SELECT * FROM $table_name WHERE form_id = '$formId'" );
@@ -89,8 +92,13 @@
         // print form data in "field : value" format
         $formData = json_decode($row->data);
         foreach ($formData as $column => $value) {
-          echo($column . " : " . $value);
-          echo "<br>";
+          // ignore if field is left blank by user
+          if (!$value) {
+            continue;
+          }
+          // column name is fetched from field mappings; else marked as "missing"
+          $column_name = isset($field_mappings[$column]) ? $field_mappings[$column] : '<em>(missing field name)</em>';
+          echo($column_name . " : " . $value . "<br>");
         }
 
         echo "<hr>";
