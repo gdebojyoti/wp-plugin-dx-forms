@@ -23,13 +23,14 @@
           require_once('DxFormsComponents.php'); // TODO: avoid relative paths
           $dxFormsComponents = new DxFormsComponents();
           
-          foreach ($attributes['fields'] as $index => $field) {
+          foreach ($attributes['fields'] as $field) {
+            $id = $field['id'];
             ?>
             <div>
-              <label for="dx_forms_first_<?= $index ?>"><?= $field['label'] ?></label>
+              <label for="<?= $id ?>"><?= $field['label'] ?></label>
               <div>
                 <?php
-                  echo $dxFormsComponents->renderComponent($index, $field);
+                  echo $dxFormsComponents->renderComponent($field);
                 ?>
               </div>
             </div>
