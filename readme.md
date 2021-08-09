@@ -5,7 +5,9 @@
 - [x] ~~Add / edit fields~~
 - [x] Admin panel page to access / delete form submissions
 - [ ] Nested blocks
-- [ ] Additional fields types - checkbox
+- [ ] Delete fields
+- [ ] Additional fields types - checkbox, radio, url, slider, datepicker
+- [ ] Reorder fields
 - [ ] Send email after each submission
 
 
