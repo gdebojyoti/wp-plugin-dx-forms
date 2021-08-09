@@ -3,13 +3,16 @@ import { Panel, PanelBody, PanelRow, Button, TextControl } from '@wordpress/comp
 
 import Editor from './components/Editor'
 
+import './blocks/input'
+import './blocks/select'
+
 wp.blocks.registerBlockType(
   "dx-forms/form",
   {
     title: "Dx Forms",
     description: 'The ultimate form plugin for WP Gutenberg',
     icon: "block-default",
-    category: "common",
+    category: "dx-blocks",
     attributes: {
       info: {
         type: "object",
