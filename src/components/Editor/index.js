@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Button, TextControl, TextareaControl, SelectControl } from '@wordpress/components'
+import { InnerBlocks } from '@wordpress/block-editor'
 
 import Sidebar from '../Sidebar'
 
@@ -43,11 +44,18 @@ const Editor = ({ setAttributes, attributes }) => {
     })
   }
 
+  const allowedBlocks = [
+    "dx-forms/input",
+    "dx-forms/select",
+    "core/button"
+  ]
+
   return (
     <div>
       <h3>{heading}</h3>
       <div>{subheading}</div>
       <form>
+        <InnerBlocks allowedBlocks={allowedBlocks} />
         {fields.map(({ label, placeholder, type, options = [] }, index) => {
           switch (type) {
             case 'options':

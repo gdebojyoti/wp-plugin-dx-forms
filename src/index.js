@@ -6,4 +6,3 @@ import './blocks/select'
 
 // primary / parent block
 import './blocks/form'
-

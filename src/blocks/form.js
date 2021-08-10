@@ -1,5 +1,7 @@
 // this is the primary form block
 
+import { InnerBlocks } from '@wordpress/block-editor'
+
 import Editor from '../components/Editor'
 
 wp.blocks.registerBlockType(
@@ -46,6 +48,6 @@ wp.blocks.registerBlockType(
       }
     },
     edit: Editor,
-    save: () => null
+    save: () => <InnerBlocks.Content />
   }
 )

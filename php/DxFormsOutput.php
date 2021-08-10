@@ -3,7 +3,7 @@
   // this class is responsible for rendering the final HTML form for end users
 
   class DxFormsOutput {
-    function render ($attributes) {
+    function render ($attributes, $content) {
       ob_start(); ?>
 
       <h3><?= $attributes['info']['heading'] ?></h3>
@@ -17,6 +17,8 @@
           name="form_id"
           value="<?= $attributes['info']['id'] ?>"
         >
+
+        <?= $content ?>
         
         <!-- form fields -->
         <?php
@@ -77,6 +79,34 @@
           return false
         }
       </script>
+
+      <?php return ob_get_clean();
+    }
+
+    function renderInput ($attributes) {
+      // debug stuff for post page only
+      $screen = get_current_screen();
+      if (!$screen) {
+        var_dump($attributes);
+      }
+
+      $id = isset($attributes['id']) ? $attributes['id'] : "";
+      $label = isset($attributes['label']) ? $attributes['label'] : "";
+      $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "TEMP_PLACEHOLDER";
+      
+      ob_start(); ?>
+
+      <div>
+        <label for="<?= $id ?>"><?= $label ?></label>
+        <div>
+          <input
+            type="text"
+            id="<?= $id ?>"
+            name="<?= $id ?>"
+            placeholder="<?= $placeholder ?>"
+          >
+        </div>
+      </div>
 
       <?php return ob_get_clean();
     }
