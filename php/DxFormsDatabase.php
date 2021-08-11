@@ -70,7 +70,6 @@
                 // check if valid input field, i.e. if block name contains "dx-forms"
                 if (is_numeric(strpos($innerBlock['blockName'], "dx-forms", 0))) {
                   $fieldData[$innerBlock['attrs']['id']] = $innerBlock['attrs']['label'];
-                  var_dump($innerBlock['attrs']['id']);
                 }
               }
 

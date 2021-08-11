@@ -45,8 +45,13 @@
       </form>
 
       <script>
-        window.addEventListener("submit", onSubmitDxForms)
-        function onSubmitDxForms (e) {
+        // TODO: find a way to prevent multiple forms from attaching multiple scripts
+        
+        // prevent multiple forms in a single page from attaching multiple event handlers
+        window.removeEventListener("submit", window.onSubmitDxForms)
+        window.addEventListener("submit", window.onSubmitDxForms)
+        
+        window.onSubmitDxForms = (e) => {
           const data = e.target.elements
           const formData = new FormData()
           
@@ -55,7 +60,6 @@
               formData.append(data[i].name, data[i].value)
             }
           }
-          console.log("formData", formData, typeof formData)
 
           try {
             const req = new XMLHttpRequest()
@@ -88,7 +92,7 @@
       // debug stuff for post page only
       $screen = get_current_screen();
       if (!$screen) {
-        var_dump($attributes);
+        // var_dump($attributes);
       }
 
       $id = isset($attributes['id']) ? $attributes['id'] : "";
