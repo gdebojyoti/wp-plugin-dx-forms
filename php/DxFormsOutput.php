@@ -20,19 +20,18 @@
 
         <!-- inner blocks (fields & CTAs) -->
         <?= $content ?>
+
+        <!-- TODO: temp CTA -->
+        <button type="submit">Dummy</button>
       </form>
 
       <script>
         // TODO: find a way to prevent multiple forms from attaching multiple scripts
         
-        // prevent multiple forms in a single page from attaching multiple event handlers
-        window.removeEventListener("submit", window.onSubmitDxForms)
-        window.addEventListener("submit", window.onSubmitDxForms)
-        
-        window.onSubmitDxForms = (e) => {
+        window.onSubmitDxForms = window.onSubmitDxForms || ((e) => {
           const data = e.target.elements
           const formData = new FormData()
-          
+
           for (let i = 0; i < data.length; i++) {
             if (data[i].dataset.isField !== undefined) {
               formData.append(data[i].name, data[i].value)
@@ -60,7 +59,11 @@
 
           e.preventDefault()
           return false
-        }
+        })
+        
+        // prevent multiple forms in a single page from attaching multiple event handlers
+        window.removeEventListener("submit", window.onSubmitDxForms)
+        window.addEventListener("submit", window.onSubmitDxForms)
       </script>
 
       <?php return ob_get_clean();
@@ -75,7 +78,7 @@
 
       $id = isset($attributes['id']) ? $attributes['id'] : "";
       $label = isset($attributes['label']) ? $attributes['label'] : "";
-      $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "TEMP_PLACEHOLDER";
+      $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "";
       
       ob_start(); ?>
 
@@ -89,6 +92,36 @@
             name="<?= $id ?>"
             placeholder="<?= $placeholder ?>"
           >
+        </div>
+      </div>
+
+      <?php return ob_get_clean();
+    }
+
+    function renderSelect ($attributes) {
+      $id = isset($attributes['id']) ? $attributes['id'] : "";
+      $label = isset($attributes['label']) ? $attributes['label'] : "";
+      $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "";
+      $options = isset($attributes['options']) ? $attributes['options'] : array();
+
+      ob_start(); ?>
+
+      <div>
+        <label for="<?= $id ?>"><?= $label ?></label>
+        <div>
+          <select
+            data-is-field
+            id="<?= $id ?>"
+            name="<?= $id ?>"
+            placeholder="<?= $placeholder ?>"
+          >
+            <option value=""><?= $placeholder ?></option>
+            <?php
+              foreach($options as $option) {
+                echo "<option value=$option>$option</option>";
+              }
+            ?>
+          </select>
         </div>
       </div>
 

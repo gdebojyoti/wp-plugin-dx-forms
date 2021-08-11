@@ -58,6 +58,11 @@
         'editor_script' => 'dx-forms',
         'render_callback' => array($output, 'renderInput')
       ) );
+
+      register_block_type( 'dx-forms/select', array(
+        'editor_script' => 'dx-forms',
+        'render_callback' => array($output, 'renderSelect')
+      ) );
     }
 
     // create a new category for all blocks
