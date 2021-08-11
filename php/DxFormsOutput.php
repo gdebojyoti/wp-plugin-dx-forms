@@ -18,30 +18,8 @@
           value="<?= $attributes['info']['id'] ?>"
         >
 
+        <!-- inner blocks (fields & CTAs) -->
         <?= $content ?>
-        
-        <!-- form fields -->
-        <?php
-          require_once('DxFormsComponents.php'); // TODO: avoid relative paths
-          $dxFormsComponents = new DxFormsComponents();
-          
-          foreach ($attributes['fields'] as $field) {
-            $id = $field['id'];
-            ?>
-            <div>
-              <label for="<?= $id ?>"><?= $field['label'] ?></label>
-              <div>
-                <?php
-                  echo $dxFormsComponents->renderComponent($field);
-                ?>
-              </div>
-            </div>
-            <?php
-          }
-        ?>
-
-        <!-- form submit CTA -->
-        <button type="submit"><?= esc_html($attributes['cta']['text']) ?></button>
       </form>
 
       <script>

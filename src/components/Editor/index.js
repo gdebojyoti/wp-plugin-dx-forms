@@ -18,10 +18,7 @@ const Editor = ({ setAttributes, attributes }) => {
     info: {
       id, heading, subheading
     },
-    fields = [],
-    cta: {
-      text: ctaText = 'REMOVE_CTA'
-    } = {}
+    fields = []
   } = attributes
 
   useEffect(() => {
@@ -37,12 +34,6 @@ const Editor = ({ setAttributes, attributes }) => {
       })
     }
   }, [])
-  
-  const onChange = (e, isEvent) => {
-    setAttributes({
-      cta: isEvent ? e.target.value : e
-    })
-  }
 
   const allowedBlocks = [
     "dx-forms/input",
@@ -88,11 +79,6 @@ const Editor = ({ setAttributes, attributes }) => {
               )
           }
         })}
-
-        {/* CTA */}
-        <button>
-          {ctaText}
-        </button>
 
         <Sidebar
           setAttributes={setAttributes}

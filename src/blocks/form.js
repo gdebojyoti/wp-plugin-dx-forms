@@ -20,22 +20,7 @@ wp.blocks.registerBlockType(
           heading: "",
           subheading: ""
         }
-      },
-      // fields: {
-      //   type: "array",
-      //   default: [
-      //     {
-      //       label: "Name",
-      //       placeholder: "Please enter your name"
-      //     }
-      //   ]
-      // },
-      // cta: {
-      //   type: "object",
-      //   default: {
-      //     text: "Submit"
-      //   }
-      // }
+      }
     },
     edit: Editor,
     save: () => <InnerBlocks.Content />
