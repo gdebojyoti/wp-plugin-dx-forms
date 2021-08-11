@@ -20,8 +20,8 @@ const Editor = ({ setAttributes, attributes }) => {
     },
     fields = [],
     cta: {
-      text: ctaText
-    }
+      text: ctaText = 'REMOVE_CTA'
+    } = {}
   } = attributes
 
   useEffect(() => {

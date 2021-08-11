@@ -52,9 +52,10 @@
           
           for (let i = 0; i < data.length; i++) {
             if (data[i].dataset.isField !== undefined) {
-              formData.append(data[i].name, data[i].value);
+              formData.append(data[i].name, data[i].value)
             }
           }
+          console.log("formData", formData, typeof formData)
 
           try {
             const req = new XMLHttpRequest()
@@ -101,6 +102,7 @@
         <div>
           <input
             type="text"
+            data-is-field
             id="<?= $id ?>"
             name="<?= $id ?>"
             placeholder="<?= $placeholder ?>"

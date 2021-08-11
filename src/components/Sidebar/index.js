@@ -10,8 +10,8 @@ const Sidebar = ({setAttributes, attributes}) => {
     fields = [],
     cta,
     cta: {
-      text: ctaText
-    }
+      text: ctaText = 'REMOVE_CTA'
+    } = {}
   } = attributes
 
   const onChangeCtaText = (text) => {

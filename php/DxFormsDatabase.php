@@ -62,10 +62,16 @@
             if ($formId) {
               $formName = $info['name'];
   
-              $fields = $attributes['fields'];
               $fieldData = array();
-              foreach ($fields as $field) {
-                $fieldData[$field['id']] = $field['label'];
+              $innerBlocks = $block['innerBlocks']; // inner blocks
+              
+              // fetch ID for every valid input field block
+              foreach ($innerBlocks as $innerBlock) {
+                // check if valid input field, i.e. if block name contains "dx-forms"
+                if (is_numeric(strpos($innerBlock['blockName'], "dx-forms", 0))) {
+                  $fieldData[$innerBlock['attrs']['id']] = $innerBlock['attrs']['label'];
+                  var_dump($innerBlock['attrs']['id']);
+                }
               }
 
               // TODO: create table if not available

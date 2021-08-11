@@ -21,31 +21,21 @@ wp.blocks.registerBlockType(
           subheading: ""
         }
       },
-      fields: {
-        type: "array",
-        default: [
-          {
-            label: "Name",
-            placeholder: "Please enter your name"
-          },
-          {
-            label: "Email",
-            placeholder: "Please enter your email ID"
-          },
-        ]
-      },
-      cta: {
-        type: "object",
-        default: {
-          text: "Submit"
-        }
-      }
-    },
-    example: {
-      attributes: {
-        fields: [{label: "Label"}],
-        cta: {text: "Primary CTA"}
-      }
+      // fields: {
+      //   type: "array",
+      //   default: [
+      //     {
+      //       label: "Name",
+      //       placeholder: "Please enter your name"
+      //     }
+      //   ]
+      // },
+      // cta: {
+      //   type: "object",
+      //   default: {
+      //     text: "Submit"
+      //   }
+      // }
     },
     edit: Editor,
     save: () => <InnerBlocks.Content />
