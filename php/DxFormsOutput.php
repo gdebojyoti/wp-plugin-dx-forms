@@ -5,11 +5,11 @@
   class DxFormsOutput {
     function render ($attributes, $content) {
       ob_start(); ?>
-
-      <h3><?= $attributes['info']['heading'] ?></h3>
-      <div><?= $attributes['info']['subheading'] ?></div>
       
-      <form>
+      <form class='dx-forms'>
+        <h3><?= $attributes['info']['heading'] ?></h3>
+        <div><?= $attributes['info']['subheading'] ?></div>
+        
         <!-- hidden field to pass form ID -->
         <input
           type="hidden"
@@ -79,8 +79,8 @@
       
       ob_start(); ?>
 
-      <div>
-        <label for="<?= $id ?>"><?= $label ?></label>
+      <div class="dx-forms__input-block">
+        <label class="dx-forms__input-label" for="<?= $id ?>"><?= $label ?></label>
         <div>
           <input
             type="text"
@@ -88,6 +88,7 @@
             id="<?= $id ?>"
             name="<?= $id ?>"
             placeholder="<?= $placeholder ?>"
+            class="dx-forms__input-field"
           >
         </div>
       </div>
@@ -103,14 +104,15 @@
 
       ob_start(); ?>
 
-      <div>
-        <label for="<?= $id ?>"><?= $label ?></label>
+      <div class="dx-forms__input-block">
+        <label class="dx-forms__input-label" for="<?= $id ?>"><?= $label ?></label>
         <div>
           <select
             data-is-field
             id="<?= $id ?>"
             name="<?= $id ?>"
             placeholder="<?= $placeholder ?>"
+            class="dx-forms__input-field"
           >
             <option value=""><?= $placeholder ?></option>
             <?php
@@ -130,8 +132,8 @@
 
       ob_start(); ?>
 
-      <div>
-        <button type="submit"><?= $label ?></button>
+      <div class="dx-forms__input-block">
+        <button type="submit" class="dx-forms__cta"><?= $label ?></button>
       </div>
 
       <?php return ob_get_clean();

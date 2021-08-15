@@ -46,6 +46,13 @@
         )
       );
 
+      wp_enqueue_style(
+        'dx-forms-css',
+        plugins_url( 'styles/main.css', __FILE__ ),
+        array(),
+        time()
+      );
+
       require_once('php/DxFormsOutput.php');
       $output = new DxFormsOutput();
 

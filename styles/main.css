@@ -1,0 +1,28 @@
+/* these styles affect all the elements rendered by the dx-forms plugin */
+
+/* TODO: find a way to avoid `!important` */
+
+.dx-forms {
+  padding: 30px 20px;
+  border: dotted 1px #3335;
+}
+@media (min-width: 640px) {
+  .dx-forms {
+    padding: 30px;
+  }
+}
+
+.dx-forms__input-block, .dx-forms__cta {
+  margin-top: 20px;
+}
+
+.dx-forms__input-field {
+  width: 100%;
+  max-width: 320px !important;
+  margin-top: 7px !important;
+  /* border: solid 2px #3339; */
+  /* background-color: transparent; */
+}
+.dx-forms__input-field::placeholder {
+  opacity: .5;
+}
