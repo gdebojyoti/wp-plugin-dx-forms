@@ -6,6 +6,7 @@
 - [x] Admin panel page to access / delete form submissions
 - [x] Nested blocks
 - [ ] Styles for FE
+- [ ] Attributes - required
 - [ ] Delete fields
 - [ ] Additional fields types - checkbox, radio, url, slider, datepicker
 - [ ] Reorder fields
