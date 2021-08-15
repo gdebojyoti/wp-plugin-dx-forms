@@ -38,7 +38,8 @@ const Editor = ({ setAttributes, attributes }) => {
   const allowedBlocks = [
     "dx-forms/input",
     "dx-forms/select",
-    "core/button"
+    "dx-forms/button"
+    // "core/button"
   ]
 
   return (

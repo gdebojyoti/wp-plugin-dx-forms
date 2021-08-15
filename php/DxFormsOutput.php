@@ -20,9 +20,6 @@
 
         <!-- inner blocks (fields & CTAs) -->
         <?= $content ?>
-
-        <!-- TODO: temp CTA -->
-        <button type="submit">Dummy</button>
       </form>
 
       <script>
@@ -123,6 +120,18 @@
             ?>
           </select>
         </div>
+      </div>
+
+      <?php return ob_get_clean();
+    }
+
+    function renderButton ($attributes) {
+      $label = isset($attributes['label']) ? $attributes['label'] : "";
+
+      ob_start(); ?>
+
+      <div>
+        <button type="submit"><?= $label ?></button>
       </div>
 
       <?php return ob_get_clean();
