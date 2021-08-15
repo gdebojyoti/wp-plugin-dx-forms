@@ -39,7 +39,6 @@ const Editor = ({ setAttributes, attributes }) => {
     "dx-forms/input",
     "dx-forms/select",
     "dx-forms/button"
-    // "core/button"
   ]
 
   return (

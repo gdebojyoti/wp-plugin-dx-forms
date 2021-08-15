@@ -4,7 +4,8 @@
 - [x] ~~Create single table for plugin. Save form submissions~~
 - [x] ~~Add / edit fields~~
 - [x] Admin panel page to access / delete form submissions
-- [ ] Nested blocks
+- [x] Nested blocks
+- [ ] Styles for FE
 - [ ] Delete fields
 - [ ] Additional fields types - checkbox, radio, url, slider, datepicker
 - [ ] Reorder fields
