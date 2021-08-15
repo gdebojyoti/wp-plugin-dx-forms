@@ -7,18 +7,8 @@ import { basicSettings, fieldSettings } from './data'
 const Sidebar = ({setAttributes, attributes}) => {
   const {
     info,
-    fields = [],
-    cta,
-    cta: {
-      text: ctaText
-    }
+    fields = []
   } = attributes
-
-  const onChangeCtaText = (text) => {
-    const newCta = { ...cta }
-    newCta.text = text
-    setAttributes({ cta: newCta })
-  }
 
   // when any property (label, placeholder, etc) of an input field is changed
   const onChangeFieldDetails = (index, property, data) => {
@@ -106,14 +96,6 @@ const Sidebar = ({setAttributes, attributes}) => {
             })}
           </PanelBody>
         ))}
-
-        <PanelBody title="Action button settings">
-          <TextControl
-            label="Button text"
-            value={ctaText}
-            onChange={onChangeCtaText}
-          />
-        </PanelBody>
 
         <PanelBody title="More Settings" initialOpen>
           <Button variant='primary' onClick={addField}>

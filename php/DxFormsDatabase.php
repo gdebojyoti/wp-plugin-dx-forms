@@ -58,28 +58,34 @@
             $info = $attributes['info'];
 
             $formId = $info['id'];
-            $formName = $info['name'];
 
-            $fields = $attributes['fields'];
-            $fieldData = array();
-            foreach ($fields as $field) {
-              $fieldData[$field['id']] = $field['label'];
+            if ($formId) {
+              $formName = $info['name'];
+  
+              $fieldData = array();
+              $innerBlocks = $block['innerBlocks']; // inner blocks
+              
+              // fetch ID for every valid input field block
+              foreach ($innerBlocks as $innerBlock) {
+                // check if valid input field, i.e. if block name contains "dx-forms"
+                if (is_numeric(strpos($innerBlock['blockName'], "dx-forms", 0))) {
+                  $fieldData[$innerBlock['attrs']['id']] = $innerBlock['attrs']['label'];
+                }
+              }
+
+              // TODO: create table if not available
+              // TODO: separate fields for created_at & updated_at
+              global $wpdb;
+              $table_name = $wpdb->prefix . "dx_forms_meta_data";
+              $wpdb->replace($table_name, array(
+                "form_id" => $formId,
+                "form_name" => $formName,
+                "post_id" => $postId,
+                "field_mappings" => json_encode($fieldData)
+              ));
             }
           }
         }
-      }
-
-      if ($formId) {
-        // TODO: create table if not available
-        // TODO: separate fields for created_at & updated_at
-        global $wpdb;
-        $table_name = $wpdb->prefix . "dx_forms_meta_data";
-        $wpdb->replace($table_name, array(
-          "form_id" => $formId,
-          "form_name" => $formName,
-          "post_id" => $postId,
-          "field_mappings" => json_encode($fieldData)
-        ));
       }
     }
   }

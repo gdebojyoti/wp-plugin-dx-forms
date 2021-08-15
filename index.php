@@ -20,6 +20,7 @@
   class DxForms {
     function __construct () {
       add_action( 'init', array($this, "adminAssets") );
+      add_action( 'block_categories_all', array($this, "addBlockCategory") );
 
       // create table for form
       require_once('php/DxFormsDatabase.php');
@@ -52,6 +53,35 @@
         'editor_script' => 'dx-forms',
         'render_callback' => array($output, 'render')
       ) );
+
+      register_block_type( 'dx-forms/input', array(
+        'editor_script' => 'dx-forms',
+        'render_callback' => array($output, 'renderInput')
+      ) );
+
+      register_block_type( 'dx-forms/select', array(
+        'editor_script' => 'dx-forms',
+        'render_callback' => array($output, 'renderSelect')
+      ) );
+
+      register_block_type( 'dx-forms/button', array(
+        'editor_script' => 'dx-forms',
+        'render_callback' => array($output, 'renderButton')
+      ) );
+    }
+
+    // create a new category for all blocks
+    function addBlockCategory ($block_categories) {
+      return array_merge(
+        $block_categories,
+        [
+          [
+            'slug'  => 'dx-blocks',
+            'title' => 'Dx Blocks',
+            'icon'  => 'wordpress', // Slug of a WordPress Dashicon or custom SVG
+          ],
+        ]
+      );
     }
   }
 

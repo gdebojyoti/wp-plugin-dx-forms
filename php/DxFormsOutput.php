@@ -3,7 +3,7 @@
   // this class is responsible for rendering the final HTML form for end users
 
   class DxFormsOutput {
-    function render ($attributes) {
+    function render ($attributes, $content) {
       ob_start(); ?>
 
       <h3><?= $attributes['info']['heading'] ?></h3>
@@ -17,40 +17,21 @@
           name="form_id"
           value="<?= $attributes['info']['id'] ?>"
         >
-        
-        <!-- form fields -->
-        <?php
-          require_once('DxFormsComponents.php'); // TODO: avoid relative paths
-          $dxFormsComponents = new DxFormsComponents();
-          
-          foreach ($attributes['fields'] as $field) {
-            $id = $field['id'];
-            ?>
-            <div>
-              <label for="<?= $id ?>"><?= $field['label'] ?></label>
-              <div>
-                <?php
-                  echo $dxFormsComponents->renderComponent($field);
-                ?>
-              </div>
-            </div>
-            <?php
-          }
-        ?>
 
-        <!-- form submit CTA -->
-        <button type="submit"><?= esc_html($attributes['cta']['text']) ?></button>
+        <!-- inner blocks (fields & CTAs) -->
+        <?= $content ?>
       </form>
 
       <script>
-        window.addEventListener("submit", onSubmitDxForms)
-        function onSubmitDxForms (e) {
+        // TODO: find a way to prevent multiple forms from attaching multiple scripts
+        
+        window.onSubmitDxForms = window.onSubmitDxForms || ((e) => {
           const data = e.target.elements
           const formData = new FormData()
-          
+
           for (let i = 0; i < data.length; i++) {
             if (data[i].dataset.isField !== undefined) {
-              formData.append(data[i].name, data[i].value);
+              formData.append(data[i].name, data[i].value)
             }
           }
 
@@ -75,8 +56,83 @@
 
           e.preventDefault()
           return false
-        }
+        })
+        
+        // prevent multiple forms in a single page from attaching multiple event handlers
+        window.removeEventListener("submit", window.onSubmitDxForms)
+        window.addEventListener("submit", window.onSubmitDxForms)
       </script>
+
+      <?php return ob_get_clean();
+    }
+
+    function renderInput ($attributes) {
+      // debug stuff for post page only
+      $screen = get_current_screen();
+      if (!$screen) {
+        // var_dump($attributes);
+      }
+
+      $id = isset($attributes['id']) ? $attributes['id'] : "";
+      $label = isset($attributes['label']) ? $attributes['label'] : "";
+      $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "";
+      
+      ob_start(); ?>
+
+      <div>
+        <label for="<?= $id ?>"><?= $label ?></label>
+        <div>
+          <input
+            type="text"
+            data-is-field
+            id="<?= $id ?>"
+            name="<?= $id ?>"
+            placeholder="<?= $placeholder ?>"
+          >
+        </div>
+      </div>
+
+      <?php return ob_get_clean();
+    }
+
+    function renderSelect ($attributes) {
+      $id = isset($attributes['id']) ? $attributes['id'] : "";
+      $label = isset($attributes['label']) ? $attributes['label'] : "";
+      $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "";
+      $options = isset($attributes['options']) ? $attributes['options'] : array();
+
+      ob_start(); ?>
+
+      <div>
+        <label for="<?= $id ?>"><?= $label ?></label>
+        <div>
+          <select
+            data-is-field
+            id="<?= $id ?>"
+            name="<?= $id ?>"
+            placeholder="<?= $placeholder ?>"
+          >
+            <option value=""><?= $placeholder ?></option>
+            <?php
+              foreach($options as $option) {
+                echo "<option value=$option>$option</option>";
+              }
+            ?>
+          </select>
+        </div>
+      </div>
+
+      <?php return ob_get_clean();
+    }
+
+    function renderButton ($attributes) {
+      $label = isset($attributes['label']) ? $attributes['label'] : "";
+
+      ob_start(); ?>
+
+      <div>
+        <button type="submit"><?= $label ?></button>
+      </div>
 
       <?php return ob_get_clean();
     }

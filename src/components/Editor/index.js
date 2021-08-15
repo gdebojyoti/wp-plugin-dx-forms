@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Button, TextControl, TextareaControl, SelectControl } from '@wordpress/components'
+import { InnerBlocks } from '@wordpress/block-editor'
 
 import Sidebar from '../Sidebar'
 
@@ -17,10 +18,7 @@ const Editor = ({ setAttributes, attributes }) => {
     info: {
       id, heading, subheading
     },
-    fields = [],
-    cta: {
-      text: ctaText
-    }
+    fields = []
   } = attributes
 
   useEffect(() => {
@@ -36,18 +34,19 @@ const Editor = ({ setAttributes, attributes }) => {
       })
     }
   }, [])
-  
-  const onChange = (e, isEvent) => {
-    setAttributes({
-      cta: isEvent ? e.target.value : e
-    })
-  }
+
+  const allowedBlocks = [
+    "dx-forms/input",
+    "dx-forms/select",
+    "dx-forms/button"
+  ]
 
   return (
     <div>
       <h3>{heading}</h3>
       <div>{subheading}</div>
       <form>
+        <InnerBlocks allowedBlocks={allowedBlocks} />
         {fields.map(({ label, placeholder, type, options = [] }, index) => {
           switch (type) {
             case 'options':
@@ -80,11 +79,6 @@ const Editor = ({ setAttributes, attributes }) => {
               )
           }
         })}
-
-        {/* CTA */}
-        <button>
-          {ctaText}
-        </button>
 
         <Sidebar
           setAttributes={setAttributes}
