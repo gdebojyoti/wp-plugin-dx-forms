@@ -1,6 +1,13 @@
 import { useEffect } from 'react'
-import { InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, Button, TextControl, SelectControl } from '@wordpress/components'
+import { InspectorControls, PanelColorSettings, withColors } from '@wordpress/block-editor'
+import {
+  PanelBody,
+  Button,
+  TextControl
+} from '@wordpress/components'
+
+import StyleSidebar from './common/StyleSidebar'
+import { inputStyles } from './data'
 
 const basicSettings = [
   {
@@ -36,6 +43,13 @@ wp.blocks.registerBlockType(
       },
       placeholder: {
         type: "string"
+      },
+      styles: {
+        type: "object",
+        default: {
+          // labelFontSize: 11
+          // inputBorderWidth: 6
+        }
       }
     },
     edit: ({ setAttributes, attributes }) => {
@@ -43,8 +57,11 @@ wp.blocks.registerBlockType(
         id,
         value,
         label = 'TEMP_LABEL',
-        placeholder = 'TEMP_PLACEHOLDER'
+        placeholder = 'TEMP_PLACEHOLDER',
+        styles
       } = attributes
+
+      console.log("styles styles styles", styles)
 
       useEffect(() => {
         if (!id) {
@@ -69,6 +86,18 @@ wp.blocks.registerBlockType(
         })
       }
 
+      const onChangeStyles = (data) => {
+        setAttributes({
+          styles: {
+            ...styles,
+            ...data
+          }
+        })
+      }
+
+      const color = '#0f0'
+      const textColor = '#f00'
+
       return (
         <>
           <TextControl
@@ -80,7 +109,7 @@ wp.blocks.registerBlockType(
           <InspectorControls key="setting">
             <div id="gutenpride-controls">
               {/* TODO: cleanup; use data models */}
-              <PanelBody title="Basic settings" initialOpen>
+              <PanelBody title="Basic settings" initialOpen={false}>
                 {basicSettings.map(({key, label, isReadOnly}) => (
                   <TextControl
                     label={label}
@@ -91,6 +120,28 @@ wp.blocks.registerBlockType(
                   />
                 ))}
               </PanelBody>
+
+              <StyleSidebar
+                fields={inputStyles}
+                data={styles}
+                onChange={onChangeStyles}
+              />
+
+              <PanelColorSettings
+                title='Color Settings'
+                colorSettings={ [
+                  {
+                    value: color,
+                    onChange: ( colorValue ) => setAttributes( { color: colorValue } ),
+                    label: 'Background Color'
+                  },
+                  {
+                    value: textColor,
+                    onChange: ( colorValue ) => setAttributes( { textColor: colorValue } ),
+                    label: 'Text Color'
+                  }
+                ] }
+              />
             </div>
           </InspectorControls>
         </>
