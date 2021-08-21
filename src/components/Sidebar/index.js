@@ -40,8 +40,6 @@ const Sidebar = ({setAttributes, attributes}) => {
     })
   }
 
-  console.log("fields data", fields)
-
   return (
     <InspectorControls key="setting">
       <div id="gutenpride-controls">

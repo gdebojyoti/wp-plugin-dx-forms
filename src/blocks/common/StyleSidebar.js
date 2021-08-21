@@ -17,14 +17,12 @@ const Field = ({ data, value, onChange }) => {
   const { key, type, title, options } = data
 
   const onChangeData = e => {
-    console.log("data updated", e)
     onChange({ [key]: e })
   }
 
   switch (type) {
     case 'range': {
       const { min, max, defaultValue } = options
-      console.log("oiptions", key, value, defaultValue)
       return <RangeControl
         label={title}
         value={value === undefined ? defaultValue : value}

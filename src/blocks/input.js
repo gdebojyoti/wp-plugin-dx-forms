@@ -69,12 +69,9 @@ wp.blocks.registerBlockType(
 
       useEffect(() => {
         if (!id) {
-          console.log("not found..")
           setAttributes({
             id: `field-${new Date().getTime()}` // TODO: add a random number instead of relying on just timestamps
           })
-        } else {
-          console.log("ID already assigned", id)
         }
       }, [])
 
