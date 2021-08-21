@@ -34,11 +34,12 @@ const Field = ({ data, value, onChange }) => {
       />
     }
     case 'color': {
+      // TODO: find a way to use theme colors as sample instead
       const sampleColors = [
         { name: 'red', color: '#f00' },
         { name: 'white', color: '#fff' },
         { name: 'blue', color: '#00f' },
-      ];
+      ]
       return <>
         <label>{title}</label>
         <br /><br />
