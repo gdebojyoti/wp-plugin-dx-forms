@@ -3,6 +3,12 @@
   // this class is responsible for rendering the final HTML form for end users
 
   class DxFormsOutput {
+    function __construct () {
+      // init style property mappings
+      $string = file_get_contents(DX_FORMS_PLUGIN_PATH . "/src/data/styleMappings.json");
+      $this->styleMappings = json_decode($string);
+    }
+
     function render ($attributes, $content) {
       ob_start(); ?>
       
@@ -77,8 +83,10 @@
       $label = isset($attributes['label']) ? $attributes['label'] : "";
       $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "";
 
-      $labelStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], 'label') : "";
-      $inputStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], 'input') : "";
+      $styles = $this->readJson();
+
+      $labelStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], $styles, 'label') : "";
+      $inputStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], $styles, 'input') : "";
       
       ob_start(); ?>
 
@@ -147,48 +155,29 @@
       <?php return ob_get_clean();
     }
 
-    function getStyles ($styles, $element) {
-      if (!isset($styles) || !$styles) {
-        return "";
-      }
+    function readJson () {
+      $string = file_get_contents(DX_FORMS_PLUGIN_PATH . "/src/data/all.json");
+      $jsonData = json_decode($string);
+      return $jsonData->inputStyles;
+    }
 
-      $result = "";
+    function getStyles ($styles, $json, $key) {
+      $validKeys = $this->styleMappings->{$key};
+      $computedStyles = "";
 
-      // TODO: find a better way to assign these styles
-      switch ($element) {
-        case 'label': {
-          if (isset($styles['labelFontSize'])) {
-            $result .= "font-size: " . $styles['labelFontSize'] . "px;";
+      foreach ($json as $style) {
+        if (in_array($style->key, $validKeys)) {
+          if (isset($styles[$style->key])) {
+            $computedStyles .= $style->prop . ":" . $styles[$style->key];
+
+            // TODO: consider fetching suffix data from JSON file
+            // add suffix
+            $computedStyles .= in_array($style->prop, ['font-size', 'border-width', 'border-radius']) ? "px;" : ";";
           }
-          if (isset($styles['labelColor'])) {
-            $result .= "color: " . $styles['labelColor'] . ";";
-          }
-          break;
-        }
-        case 'input': {
-          if (isset($styles['inputFontSize'])) {
-            $result .= "font-size: " . $styles['inputFontSize'] . "px;";
-          }
-          if (isset($styles['inputColor'])) {
-            $result .= "color: " . $styles['inputColor'] . ";";
-          }
-          if (isset($styles['inputBackgroundColor'])) {
-            $result .= "background-color: " . $styles['inputBackgroundColor'] . ";";
-          }
-          if (isset($styles['inputBorderWidth'])) {
-            $result .= "border-width: " . $styles['inputBorderWidth'] . "px;";
-          }
-          if (isset($styles['inputBorderRadius'])) {
-            $result .= "border-radius: " . $styles['inputBorderRadius'] . "px;";
-          }
-          if (isset($styles['inputBorderColor'])) {
-            $result .= "border-color: " . $styles['inputBorderColor'] . ";";
-          }
-          break;
         }
       }
 
-      return $result;
+      return $computedStyles;
     }
   }
 

@@ -7,7 +7,10 @@ import {
 } from '@wordpress/components'
 
 import StyleSidebar from './common/StyleSidebar'
-import { inputStyles } from './data'
+
+import hyphenToCamelCase from '../utils/hyphenToCamelCase'
+import { inputStyles } from '../data/all.json'
+import styleMappings from '../data/styleMappings.json'
 
 const basicSettings = [
   {
@@ -61,7 +64,8 @@ wp.blocks.registerBlockType(
         styles
       } = attributes
 
-      const { labelStyle, inputStyle } = computeStyles(styles)
+      const labelStyle = getElementStyleObject(styles, 'label')
+      const inputStyle = getElementStyleObject(styles, 'input')
 
       useEffect(() => {
         if (!id) {
@@ -150,40 +154,38 @@ wp.blocks.registerBlockType(
   }
 )
 
-// TODO: find a better way to compute these styles
-function computeStyles (styles) {
-  const {
-    labelFontSize,
-    labelColor,
-    inputFontSize,
-    inputColor,
-    inputBackgroundColor,
-    inputBorderWidth,
-    inputBorderColor,
-    inputBorderRadius
-  } = styles
+function getElementStyleObject (styles, element) {
+  const styleObj = {}
 
-  const labelStyle = {}
-  
-  if (labelFontSize !== undefined)
-    labelStyle.fontSize = labelFontSize
-  if (labelColor !== undefined)
-    labelStyle.color = labelColor
+  // get mappings for element
+  const mappings = styleMappings[element]
 
-  const inputStyle = {}
+  // return empty style object for invalid element
+  if (!mappings || !mappings.length) {
+    return {}
+  }
 
-  if (inputFontSize !== undefined)
-    inputStyle.fontSize = inputFontSize
-  if (inputColor !== undefined)
-    inputStyle.color = inputColor
-  if (inputBackgroundColor !== undefined)
-    inputStyle.backgroundColor = inputBackgroundColor
-  if (inputBorderWidth !== undefined)
-    inputStyle.borderWidth = inputBorderWidth
-  if (inputBorderColor !== undefined)
-    inputStyle.borderColor = inputBorderColor
-  if (inputBorderRadius !== undefined)
-    inputStyle.borderRadius = inputBorderRadius
+  mappings.forEach(key => {
+    // fetch value set in "attributes"
+    const value = styles[key]
 
-  return { labelStyle, inputStyle }
+    // exit if no value is found
+    if (value === undefined) {
+      return
+    }
+
+    // get CSS property name for `key`
+    const { prop: cssProperty } =
+      inputStyles.find(style => style.key === key) || {}
+
+    // exit for invalid `key`
+    if (!cssProperty) {
+      return
+    }
+    
+    // convert the css property to camel case
+    styleObj[hyphenToCamelCase(cssProperty)] = value
+  })
+
+  return styleObj
 }

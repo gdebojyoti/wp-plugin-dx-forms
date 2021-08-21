@@ -1,0 +1,14 @@
+{
+  "label": [
+    "labelFontSize",
+    "labelColor"
+  ],
+  "input": [
+    "inputFontSize",
+    "inputColor",
+    "inputBackgroundColor",
+    "inputBorderWidth",
+    "inputBorderRadius",
+    "inputBorderColor"
+  ]
+}

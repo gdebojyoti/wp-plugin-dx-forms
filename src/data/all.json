@@ -1,0 +1,70 @@
+{
+  "inputStyles": [
+    {
+      "key": "labelFontSize",
+      "prop": "font-size",
+      "type": "range",
+      "title": "Label text size",
+      "options": {
+        "min": 10,
+        "max": 20
+      }
+    },
+    {
+      "key": "labelColor",
+      "prop": "color",
+      "type": "color",
+      "title": "Label text color"
+    },
+    {
+      "key": "inputFontSize",
+      "prop": "font-size",
+      "type": "range",
+      "title": "Input text size",
+      "options": {
+        "min": 10,
+        "max": 20
+      }
+    },
+    {
+      "key": "inputColor",
+      "prop": "color",
+      "type": "color",
+      "title": "Input text color"
+    },
+    {
+      "key": "inputBackgroundColor",
+      "prop": "background-color",
+      "type": "color",
+      "title": "Input background color"
+    },
+    {
+      "key": "inputBorderWidth",
+      "prop": "border-width",
+      "type": "range",
+      "title": "Input border width",
+      "options": {
+        "min": 0,
+        "max": 10,
+        "defaultValue": 1
+      }
+    },
+    {
+      "key": "inputBorderRadius",
+      "prop": "border-radius",
+      "type": "range",
+      "title": "Input border curve",
+      "options": {
+        "min": 0,
+        "max": 50,
+        "defaultValue": 0
+      }
+    },
+    {
+      "key": "inputBorderColor",
+      "prop": "border-color",
+      "type": "color",
+      "title": "Input border color"
+    }
+  ]
+}
