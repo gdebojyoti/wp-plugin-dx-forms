@@ -61,7 +61,7 @@ wp.blocks.registerBlockType(
         styles
       } = attributes
 
-      console.log("styles styles styles", styles)
+      const { labelStyle, inputStyle } = computeStyles(styles)
 
       useEffect(() => {
         if (!id) {
@@ -100,12 +100,27 @@ wp.blocks.registerBlockType(
 
       return (
         <>
-          <TextControl
-            id={id}
-            label={label}
-            placeholder={placeholder}
-            onChange={onChange}
-          />
+          {/* in-editor version */}
+          <div className="dx-forms__input-block">
+            <label
+              className="dx-forms__input-label"
+              for={id}
+              style={labelStyle}
+            >
+              {label}
+            </label>
+            <div>
+              <input
+                type="text"
+                id={id}
+                placeholder={placeholder}
+                className="dx-forms__input-field"
+                onChange={onChange}
+                style={inputStyle}
+              />
+            </div>
+          </div>
+
           <InspectorControls key="setting">
             <div id="gutenpride-controls">
               {/* TODO: cleanup; use data models */}
@@ -126,22 +141,6 @@ wp.blocks.registerBlockType(
                 data={styles}
                 onChange={onChangeStyles}
               />
-
-              <PanelColorSettings
-                title='Color Settings'
-                colorSettings={ [
-                  {
-                    value: color,
-                    onChange: ( colorValue ) => setAttributes( { color: colorValue } ),
-                    label: 'Background Color'
-                  },
-                  {
-                    value: textColor,
-                    onChange: ( colorValue ) => setAttributes( { textColor: colorValue } ),
-                    label: 'Text Color'
-                  }
-                ] }
-              />
             </div>
           </InspectorControls>
         </>
@@ -150,3 +149,41 @@ wp.blocks.registerBlockType(
     save: () => null
   }
 )
+
+// TODO: find a better way to compute these styles
+function computeStyles (styles) {
+  const {
+    labelFontSize,
+    labelColor,
+    inputFontSize,
+    inputColor,
+    inputBackgroundColor,
+    inputBorderWidth,
+    inputBorderColor,
+    inputBorderRadius
+  } = styles
+
+  const labelStyle = {}
+  
+  if (labelFontSize !== undefined)
+    labelStyle.fontSize = labelFontSize
+  if (labelColor !== undefined)
+    labelStyle.color = labelColor
+
+  const inputStyle = {}
+
+  if (inputFontSize !== undefined)
+    inputStyle.fontSize = inputFontSize
+  if (inputColor !== undefined)
+    inputStyle.color = inputColor
+  if (inputBackgroundColor !== undefined)
+    inputStyle.backgroundColor = inputBackgroundColor
+  if (inputBorderWidth !== undefined)
+    inputStyle.borderWidth = inputBorderWidth
+  if (inputBorderColor !== undefined)
+    inputStyle.borderColor = inputBorderColor
+  if (inputBorderRadius !== undefined)
+    inputStyle.borderRadius = inputBorderRadius
+
+  return { labelStyle, inputStyle }
+}

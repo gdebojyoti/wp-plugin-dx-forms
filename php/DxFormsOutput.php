@@ -76,11 +76,18 @@
       $id = isset($attributes['id']) ? $attributes['id'] : "";
       $label = isset($attributes['label']) ? $attributes['label'] : "";
       $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "";
+
+      $labelStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], 'label') : "";
+      $inputStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], 'input') : "";
       
       ob_start(); ?>
 
       <div class="dx-forms__input-block">
-        <label class="dx-forms__input-label" for="<?= $id ?>"><?= $label ?></label>
+        <label
+          class="dx-forms__input-label"
+          for="<?= $id ?>"
+          style="<?= $labelStyle ?>"
+        ><?= $label ?></label>
         <div>
           <input
             type="text"
@@ -89,6 +96,7 @@
             name="<?= $id ?>"
             placeholder="<?= $placeholder ?>"
             class="dx-forms__input-field"
+            style="<?= $inputStyle ?>"
           >
         </div>
       </div>
@@ -137,6 +145,50 @@
       </div>
 
       <?php return ob_get_clean();
+    }
+
+    function getStyles ($styles, $element) {
+      if (!isset($styles) || !$styles) {
+        return "";
+      }
+
+      $result = "";
+
+      // TODO: find a better way to assign these styles
+      switch ($element) {
+        case 'label': {
+          if (isset($styles['labelFontSize'])) {
+            $result .= "font-size: " . $styles['labelFontSize'] . "px;";
+          }
+          if (isset($styles['labelColor'])) {
+            $result .= "color: " . $styles['labelColor'] . ";";
+          }
+          break;
+        }
+        case 'input': {
+          if (isset($styles['inputFontSize'])) {
+            $result .= "font-size: " . $styles['inputFontSize'] . "px;";
+          }
+          if (isset($styles['inputColor'])) {
+            $result .= "color: " . $styles['inputColor'] . ";";
+          }
+          if (isset($styles['inputBackgroundColor'])) {
+            $result .= "background-color: " . $styles['inputBackgroundColor'] . ";";
+          }
+          if (isset($styles['inputBorderWidth'])) {
+            $result .= "border-width: " . $styles['inputBorderWidth'] . "px;";
+          }
+          if (isset($styles['inputBorderRadius'])) {
+            $result .= "border-radius: " . $styles['inputBorderRadius'] . "px;";
+          }
+          if (isset($styles['inputBorderColor'])) {
+            $result .= "border-color: " . $styles['inputBorderColor'] . ";";
+          }
+          break;
+        }
+      }
+
+      return $result;
     }
   }
 
