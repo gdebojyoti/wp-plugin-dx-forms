@@ -1,6 +1,11 @@
 import { useEffect } from 'react'
 import { InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, Button, TextControl } from '@wordpress/components'
+import { PanelBody, TextControl } from '@wordpress/components'
+
+import StyleSidebar from './common/StyleSidebar'
+
+import getElementStyleObject from '../utils/getElementStyleObject'
+import { buttonStyles } from '../data/all.json'
 
 const basicSettings = [
   {
@@ -19,12 +24,19 @@ wp.blocks.registerBlockType(
       label: {
         type: "string",
         default: "Submit"
+      },
+      styles: {
+        type: "object",
+        default: {}
       }
     },
     edit: ({ setAttributes, attributes }) => {
       const {
-        label
+        label,
+        styles
       } = attributes
+
+      const buttonStyle = getElementStyleObject(buttonStyles, styles, 'button')
 
       const onChange = value => {
         setAttributes({
@@ -38,9 +50,18 @@ wp.blocks.registerBlockType(
         })
       }
 
+      const onChangeStyles = (data) => {
+        setAttributes({
+          styles: {
+            ...styles,
+            ...data
+          }
+        })
+      }
+
       return (
         <>
-          <Button>{label}</Button>
+          <button style={{...buttonStyle, borderStyle: 'solid'}}>{label}</button>
           <InspectorControls key="setting">
             <div id="gutenpride-controls">
               <PanelBody title="Basic settings" initialOpen>
@@ -54,6 +75,12 @@ wp.blocks.registerBlockType(
                   />
                 ))}
               </PanelBody>
+
+              <StyleSidebar
+                fields={buttonStyles}
+                data={styles}
+                onChange={onChangeStyles}
+              />
             </div>
           </InspectorControls>
         </>

@@ -83,7 +83,7 @@
       $label = isset($attributes['label']) ? $attributes['label'] : "";
       $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : "";
 
-      $styles = $this->readJson();
+      $styles = $this->readJson('inputStyles');
 
       $labelStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], $styles, 'label') : "";
       $inputStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], $styles, 'input') : "";
@@ -146,19 +146,26 @@
     function renderButton ($attributes) {
       $label = isset($attributes['label']) ? $attributes['label'] : "";
 
+      $styles = $this->readJson('buttonStyles');
+      $buttonStyle = isset($attributes['styles']) ? $this->getStyles($attributes['styles'], $styles, 'button') : "";
+
       ob_start(); ?>
 
       <div class="dx-forms__input-block">
-        <button type="submit" class="dx-forms__cta"><?= $label ?></button>
+        <button
+          type="submit"
+          class="dx-forms__cta"
+          style="<?= $buttonStyle ?>"
+        ><?= $label ?></button>
       </div>
 
       <?php return ob_get_clean();
     }
 
-    function readJson () {
+    function readJson ($label) {
       $string = file_get_contents(DX_FORMS_PLUGIN_PATH . "/src/data/all.json");
       $jsonData = json_decode($string);
-      return $jsonData->inputStyles;
+      return $jsonData->{$label};
     }
 
     function getStyles ($styles, $json, $key) {
@@ -172,7 +179,8 @@
 
             // TODO: consider fetching suffix data from JSON file
             // add suffix
-            $computedStyles .= in_array($style->prop, ['font-size', 'border-width', 'border-radius']) ? "px;" : ";";
+            $suffixSet = ['height', 'font-size', 'border-width', 'border-radius'];
+            $computedStyles .= in_array($style->prop, $suffixSet) ? "px;" : ";";
           }
         }
       }

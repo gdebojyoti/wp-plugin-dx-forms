@@ -10,5 +10,13 @@
     "inputBorderWidth",
     "inputBorderRadius",
     "inputBorderColor"
+  ],
+  "button": [
+    "buttonFontSize",
+    "buttonColor",
+    "buttonBackgroundColor",
+    "buttonBorderWidth",
+    "buttonBorderRadius",
+    "buttonBorderColor"
   ]
 }

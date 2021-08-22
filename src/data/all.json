@@ -1,4 +1,56 @@
 {
+  "buttonStyles": [
+    {
+      "key": "buttonFontSize",
+      "prop": "font-size",
+      "type": "range",
+      "title": "Button text size",
+      "options": {
+        "min": 10,
+        "max": 20
+      }
+    },
+    {
+      "key": "buttonColor",
+      "prop": "color",
+      "type": "color",
+      "title": "Button text color"
+    },
+    {
+      "key": "buttonBackgroundColor",
+      "prop": "background-color",
+      "type": "color",
+      "title": "Button background color"
+    },
+    {
+      "key": "buttonBorderWidth",
+      "prop": "border-width",
+      "type": "range",
+      "title": "Button border width",
+      "options": {
+        "min": 0,
+        "max": 10,
+        "defaultValue": 1
+      }
+    },
+    {
+      "key": "buttonBorderRadius",
+      "prop": "border-radius",
+      "type": "range",
+      "title": "Button border curve",
+      "options": {
+        "min": 0,
+        "max": 50,
+        "defaultValue": 0
+      }
+    },
+    {
+      "key": "buttonBorderColor",
+      "prop": "border-color",
+      "type": "color",
+      "title": "Button border color"
+    }
+  ],
   "inputStyles": [
     {
       "key": "labelFontSize",
